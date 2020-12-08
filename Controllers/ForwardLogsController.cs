@@ -26,9 +26,9 @@ namespace jsonToCefParser.Controllers
         }
 
         [HttpPost("{key}")]
-        public async Task<IActionResult> Post(string id)
+        public async Task<IActionResult> Post(string key)
         {
-            if(id == _configuration["apiKey"]){
+            if(key == _configuration["apiKey"]){
                 using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
                 {
                     string requestBody = await reader.ReadToEndAsync();
