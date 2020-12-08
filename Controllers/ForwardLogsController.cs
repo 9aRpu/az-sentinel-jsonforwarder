@@ -38,7 +38,7 @@ namespace jsonToCefParser.Controllers
                 string hashedString = BuildSignature(stringToHash, _configuration["sharedKey"], _logger);
                 string signature = "SharedKey " + _configuration["customerId"] + ":" + hashedString;
 
-                return PushLog(signature, datestring, requestBody, _logger);
+                return PushLog(signature, datestring, requestBody, _logger, _configuration);
             }
         }
 
@@ -56,7 +56,7 @@ namespace jsonToCefParser.Controllers
             }
         }
 
-        private static IActionResult PushLog(string signature, string date, string json, ILogger<ForwardLogsController> _logger)
+        private static IActionResult PushLog(string signature, string date, string json, ILogger<ForwardLogsController> _logger, IConfiguration _configuration)
         {
             try
             {
