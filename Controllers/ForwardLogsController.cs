@@ -42,7 +42,7 @@ namespace jsonToCefParser.Controllers
                     return PushLog(signature, datestring, requestBody, _logger, _configuration);
                 }
             } else {
-                return new Forbid();
+                return new ForbidResult();
             }
            
         }
