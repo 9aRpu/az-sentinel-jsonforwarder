@@ -25,21 +25,26 @@ namespace jsonToCefParser.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post()
+        [HttpPost("{key}")]
+        public async Task<IActionResult> Post(string id)
         {
-            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
-            {
-                string requestBody = await reader.ReadToEndAsync();
-                _logger.LogInformation("[INFO] Request received...");
-                var datestring = DateTime.UtcNow.ToString("r");
-                var jsonBytes = Encoding.UTF8.GetBytes(requestBody);
-                string stringToHash = "POST\n" + jsonBytes.Length + "\napplication/json\n" + "x-ms-date:" + datestring + "\n/api/logs";
-                string hashedString = BuildSignature(stringToHash, _configuration["sharedKey"], _logger);
-                string signature = "SharedKey " + _configuration["customerId"] + ":" + hashedString;
+            if(id == _configuration["apiKey"]){
+                using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+                {
+                    string requestBody = await reader.ReadToEndAsync();
+                    _logger.LogInformation("[INFO] Request received...");
+                    var datestring = DateTime.UtcNow.ToString("r");
+                    var jsonBytes = Encoding.UTF8.GetBytes(requestBody);
+                    string stringToHash = "POST\n" + jsonBytes.Length + "\napplication/json\n" + "x-ms-date:" + datestring + "\n/api/logs";
+                    string hashedString = BuildSignature(stringToHash, _configuration["sharedKey"], _logger);
+                    string signature = "SharedKey " + _configuration["customerId"] + ":" + hashedString;
 
-                return PushLog(signature, datestring, requestBody, _logger, _configuration);
+                    return PushLog(signature, datestring, requestBody, _logger, _configuration);
+                }
+            } else {
+                return new Forbid();
             }
+           
         }
 
         private static string BuildSignature(string message, string secret, ILogger<ForwardLogsController> _logger)
