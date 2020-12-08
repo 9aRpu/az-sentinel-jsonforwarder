@@ -68,7 +68,7 @@ namespace jsonToCefParser.Controllers
                 client.DefaultRequestHeaders.Add("Log-Type", LogName);
                 client.DefaultRequestHeaders.Add("Authorization", signature);
                 client.DefaultRequestHeaders.Add("x-ms-date", date);
-                client.DefaultRequestHeaders.Add("time-generated-field", TimeStampField);
+                //client.DefaultRequestHeaders.Add("time-generated-field", TimeStampField);
 
                 System.Net.Http.HttpContent httpContent = new StringContent(json, Encoding.UTF8);
                 httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
