@@ -61,7 +61,7 @@ namespace jsonToCefParser.Controllers
             try
             {
                 _logger.LogInformation("[INFO] Pushing logs...");
-                string url = "https://" + customerId + ".ods.opinsights.azure.com/api/logs?api-version=2016-04-01";
+                string url = "https://" +  _configuration["customerId"] + ".ods.opinsights.azure.com/api/logs?api-version=2016-04-01";
 
                 System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
