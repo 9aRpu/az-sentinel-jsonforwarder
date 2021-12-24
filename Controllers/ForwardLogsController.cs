@@ -25,6 +25,13 @@ namespace jsonToCefParser.Controllers
             _logger = logger;
         }
 
+        // GET: api/ForwardLogs
+        [HttpGet]
+        public ActionResult Get()
+        {
+            return new OkObjectResult("Api is running...");
+        }
+
         [HttpPost("{key}")]
         public async Task<IActionResult> Post(string key)
         {
